@@ -21,3 +21,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
 >Start xampp.Run the command php artisan migrate in the terminal to create tables at the database specified in the .env file. If there is an error don't be afraid. Just restart xampp.
+<br>
+[Sign in page template](https://codepen.io/ayush602/pen/mdQJreW)
+> [Free Front End Templates](https://www.freefrontend.com)
+> 
