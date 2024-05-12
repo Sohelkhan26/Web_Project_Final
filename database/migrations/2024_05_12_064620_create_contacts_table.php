@@ -18,9 +18,13 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email');
             $table->string('phone');
-            $table->string('job');
-            $table->string('company');
-            $table->text('address');
+            $table->string('address')->nullable();
+            $table->string('company')->nullable();
+            $table->string('job')->nullable();
+            $table->string('country');
+            $table->string('division');
+            $table->string('city');
+            $table->integer('zip')->nullable();
             $table->date('birthdate');
             $table->string('image')->nullable();
             $table->text('note')->nullable();

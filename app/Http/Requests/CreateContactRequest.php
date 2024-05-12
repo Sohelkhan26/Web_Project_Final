@@ -12,7 +12,7 @@ class CreateContactRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -32,7 +32,6 @@ class CreateContactRequest extends FormRequest
             'address' => 'string',
             'birthdate' => 'date',
             'image' => 'image',
-            'note' => 'text',
             'zip' => 'numeric',
             'city' => 'string',
             'division' => 'string',

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,13 +29,16 @@ Route::post('/profile',[ProfileController::class,'updateProfile'])->name('profil
 //    return view('profile');
 //})->name('profile');
 
-Route::get('/contacts' , function(){
-    return view('contacts');
-})->name('contacts');
 
 
 Route::get('/logout', [AuthController::class , 'logout'])->name('logout');
 
-Route::get('create' , function(){
-    return view('create');
+Route::get('/create' , function(){
+    return view('createcontacts');
 })->name('contacts.create');
+
+
+Route::get('/contacts' , [ContactsController::class , 'showContacts'])->name('contacts');
+Route::get('/contacts/{id}/edit', [ContactsController::class, 'edit'])->name('contacts.edit');
+Route::post('/contacts/{id}/edit', [ContactsController::class, 'updateContacts'])->name('contacts.update');
+Route::post('/create' , [ContactsController::class , 'store'])->name('contacts.store');

@@ -7,10 +7,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Contact[] $contacts
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -41,4 +48,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
 }
