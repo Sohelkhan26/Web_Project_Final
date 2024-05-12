@@ -41,5 +41,6 @@
         </div>
 
     </div>
-    <link href="{{ asset('css/contacts.css') }}" rel="stylesheet">
+    <a href="{{ route('contacts.create') }}" class="btn btn-primary position-fixed bottom-0 end-0 m-3" style="font-size: 2rem;">+</a>
+
 @endsection

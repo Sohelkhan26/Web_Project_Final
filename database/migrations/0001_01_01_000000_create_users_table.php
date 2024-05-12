@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('division');
             $table->string('zip');
+            $table->boolean('locked')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

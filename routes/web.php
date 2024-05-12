@@ -5,7 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    if(auth()->check()){
+    if(!auth()->check()){
         return redirect()->route('login.form');
     }
     return view('profile');
@@ -35,5 +35,6 @@ Route::get('/contacts' , function(){
 
 Route::get('/logout', [AuthController::class , 'logout'])->name('logout');
 
-
-
+Route::get('create' , function(){
+    return view('create');
+})->name('contacts.create');

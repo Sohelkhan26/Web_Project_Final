@@ -116,11 +116,12 @@
                         <div class="col-md-12"><label class="labels">Zip</label><input type="text" class="form-control" value="{{$user -> zip}}" name = "zip"></div>
                     </div>
                     <!-- Save Profile Button -->
-                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                    <div class="mt-5 text-center"><button class="learn-more" type="submit">Save Profile</button></div>
                 </div>
             </div>
         </div>
     </div>
     </form>
     <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/button.css')}}">
 @endsection
