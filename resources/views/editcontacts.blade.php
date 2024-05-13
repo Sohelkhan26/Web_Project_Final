@@ -5,10 +5,12 @@
 
     <div class="formbold-main-wrapper">
         <div class="formbold-form-wrapper">
-            <form method="POST" enctype="multipart/form-data" action = "{{route('contacts.update' ,['id' => $contact->id])}}">
+            <form method="post" enctype="multipart/form-data" action = "{{route('contacts.update' , ['id' => $contact -> id])}}">
                 @csrf
                 <label class="formbold-form-label">Image</label>
-                <input type="file" class="formbold-form-input" name="image" required>
+                <img class="rounded-circle mt-5" width="150px" src="{{ asset('images/' . $contact -> image) }}">
+                <label class="formbold-form-label">Change Image</label>
+                <input type="file" class="formbold-form-input" name="image">
                 <div class="formbold-input-flex">
                     <div>
                         <label for="firstname" class="formbold-form-label">
@@ -143,13 +145,13 @@
                         />
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="note">Note</label>
                     <textarea  class="form-control" id="note" name="note" placeholder="{{$contact->note}}"></textarea>
                 </div>
+{{--                <button class="formbold-btn" type = "submit">Update</button>--}}
+                <div class="mt-5 text-center"><button class="learn-more" type="submit">Update Contact</button></div>
 
-                <button class="formbold-btn" type = "submit">Update</button>
             </form>
         </div>
     </div>

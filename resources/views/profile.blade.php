@@ -6,7 +6,6 @@
             font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             background-color: #3c373e;
             font-weight: 300; }
-
         p {
             color: rgba(255, 255, 255, 0.5);
             font-weight: 300; }
@@ -81,9 +80,6 @@
             border: none !important; }
 
     </style>
-{{--    add form tags to the existing labels and input fields --}}
-
-
     <form method = "POST" action="{{route('profile.update')}}">
         @csrf
     <div class="container rounded bg-white mt-5 mb-5">

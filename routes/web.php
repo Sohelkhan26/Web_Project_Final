@@ -40,5 +40,14 @@ Route::get('/create' , function(){
 
 Route::get('/contacts' , [ContactsController::class , 'showContacts'])->name('contacts');
 Route::get('/contacts/{id}/edit', [ContactsController::class, 'edit'])->name('contacts.edit');
-Route::post('/contacts/{id}/edit', [ContactsController::class, 'updateContacts'])->name('contacts.update');
+//Route::post('/contacts/{id}/edit',
+//function (){
+////    dd($id);
+////    return view('temp');
+//})->name('contacts.update');
+Route::post('/contacts/{id}/edit' , [ContactsController::class , 'updateContacts'])->name('contacts.update');
 Route::post('/create' , [ContactsController::class , 'store'])->name('contacts.store');
+
+//Route::post('/sohel' , function (){
+//    return "sohel";
+//})->name('sohel');
