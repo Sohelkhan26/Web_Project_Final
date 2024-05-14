@@ -89,7 +89,7 @@
                     <!-- Replace the src attribute with the image path -->
                     <img class="rounded-circle mt-5" width="150px" src="{{ asset('images/' . $user -> image) }}">
                     <!-- Placeholder for name and email -->
-                    <span class="font-weight-bold">{{$user -> first_name . $user -> last_name }}</span>
+                    <span class="font-weight-bold">{{$user -> first_name . " " .$user -> last_name }}</span>
                     <span class="text-black-50">{{$user -> email}}</span>
                 </div>
             </div>
@@ -102,6 +102,9 @@
                         <!-- Input fields for first name and last name -->
                         <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" value="{{$user -> first_name}}" name = "first_name"></div>
                         <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control" value="{{$user -> last_name}}" name = "last_name"></div>
+                        <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" value="{{$user -> email}}" name = "email"></div>
+                        <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" value="{{$user -> username}}" name = "username"></div>
+
                     </div>
                     <div class="row mt-3">
                         <!-- Input fields for address, city, phone, division, and zip -->

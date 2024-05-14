@@ -26,6 +26,12 @@
 
     <label class="form-label text-light">Password :</label>
     <input type="password" class="form-control" name="password" required>
+    <br>
+    <a href="{{route('register.form')}}">New User? Register now.</a>
+    <br>
+<div class="two">
+    <label><a href={{ route('forgot_password.view') }}>Forgot password?</a></label>
+</div>
 {{--    @error('password')--}}
 {{--    <small class="text-danger">{{ $message }}</small>--}}
 {{--    <br>--}}
@@ -33,4 +39,5 @@
     <div class="text-center">
         <button type="submit" class="btn btn-primary">Sign in</button>
     </div>
+
 @endsection

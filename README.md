@@ -252,3 +252,60 @@ The "419 Page Expired" error in Laravel is usually related to CSRF (Cross-Site R
 
 The "403 This action is unauthorized" error typically occurs when the user doesn't have the necessary permissions to perform the requested action.
 I encountered this error when I used a CreateContactRequest class. In that class the authorize method was returning false. I changed it to true and the error was resolved.
+
+
+## Laravel Testing
+To write tests for your middleware in Laravel, you can use the built-in testing features provided by the framework. Here's a step-by-step guide on how you can do this:
+
+1. **Create a new test file**: Laravel provides a command to generate a new test file. You can use the `make:test` Artisan command to create a new test file for your middleware. Let's say your middleware is named `AuthGuard`, you can create a test file for it like this:
+
+```bash
+php artisan make:test AuthGuardTest
+```
+
+This will create a new test file in the `tests/Unit` directory.
+
+2. **Write the test**: In the test file, you can write a test method to test your middleware. You can use the `actingAs` method to authenticate a user for a single test. After that, you can make a request to a route that uses your middleware and assert the expected outcome.
+
+Here's an example of how you can write the test:
+
+```php
+<?php
+
+namespace Tests\Unit;
+
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class AuthGuardTest extends TestCase
+{
+    use RefreshDatabase;
+
+    /** @test */
+    public function it_redirects_guests()
+    {
+        $response = $this->get('/profile');
+
+        $response->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function it_allows_authenticated_users()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/profile');
+
+        $response->assertOk();
+    }
+}
+```
+
+In the first test, we're making a GET request to the `/profile` route without authenticating a user. Since your `AuthGuard` middleware should redirect guests to the login page, we're asserting that the response should be a redirect to `/login`.
+
+In the second test, we're authenticating a user using the `actingAs` method and then making a GET request to the `/profile` route. Since authenticated users should be able to access this route, we're asserting that the response should be OK (HTTP status code 200).
+
+3. **Run the test**: After writing the test, you can run it using the `php artisan test` command.
+
+Please note that this is a basic example and your tests might need to be more complex depending on the logic in your middleware. Also, remember to replace the route (`/profile`) and the redirect route (`/login`) with the actual routes in your application.

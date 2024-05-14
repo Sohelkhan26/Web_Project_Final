@@ -37,7 +37,7 @@ class ContactsController extends Controller
     }
     public function store(CreateContactRequest $request)
     {
-        dd($request->all());
+//        dd($request->all());
         $user_id = Auth::user()->id;
         if ($request->hasFile('image')) {
             $imageName = time().'.'.$request->image->extension();

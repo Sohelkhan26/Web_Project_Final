@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>
-        Hello World
+        Email Sent
     </h1>
 </body>
 </html>
