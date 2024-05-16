@@ -22,10 +22,10 @@ Route::get('/temp' , function (){
 
 
 //forgot password
-Route::get('/forgot_password', [ForgotPasswordManager::class, 'forgot_password'])->name('forgot_password.view');
-Route::post('/forgot_password', [ForgotPasswordManager::class, 'forgot_passwordPost'])->name('forgot_passwordPost');
-Route::get('/resetPassword/{token}', [ForgotPasswordManager::class, 'resetPassword'])->name('resetPassword');
-Route::post('/resetPassword', [ForgotPasswordManager::class, 'resetPasswordPost'])->name('resetPasswordPost');
+Route::get('/forgot_password', [ForgotPasswordManager::class, 'forgot_password'])->name('forgot_password.view'); // Form for the password Reset Request
+Route::post('/forgot_password', [ForgotPasswordManager::class, 'forgot_passwordPost'])->name('forgot_passwordPost'); // Submits the password Reset Request as the method is POST
+Route::get('/resetPassword/{token}', [ForgotPasswordManager::class, 'resetPassword'])->name('resetPassword'); // Redirects the user to the password reset page
+Route::post('/resetPassword', [ForgotPasswordManager::class, 'resetPasswordPost'])->name('resetPasswordPost'); // Assess the request and resets the password
 
 Route::middleware(AuthGuard::class)->group(function(){
     Route::get('/', function () {
@@ -43,3 +43,8 @@ Route::middleware(AuthGuard::class)->group(function(){
     Route::get('/contacts' , [ContactsController::class , 'showContacts'])->name('contacts');
     Route::get('/contacts/{id}/edit', [ContactsController::class, 'edit'])->name('contacts.edit');
 });
+
+Route::get('/contacts/export', [ContactsController::class, 'export'])->name('contacts.export');
+Route::get('/contacts/import' , [ContactsController::class , 'showImportForm'])->name('contacts.importShow');
+
+Route::post('/contacts/import', [ContactsController::class, 'import'])->name('contacts.import');

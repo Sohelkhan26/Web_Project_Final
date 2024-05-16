@@ -1,8 +1,7 @@
-@extends('layout.sidebar')
+@extends('layout.form')
+@section('title', 'Forgot Password')
+@section('heading', 'Forgot Password')
 @section('content')
-    <div>
-        <h2>Forgot Password</h2>
-
         <!-- Display status or errors if any -->
         @if (session('status'))
             <div>
@@ -21,20 +20,14 @@
             </div>
         @endif
 
-        <!-- Forgot password form -->
-        <form method="POST" action="#">
-        @csrf
-
-        <!-- Email input field -->
         <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus>
+
+            <label class="form-label text-light">Email :</label>
+            <input type="email" class="form-control" name="email" required value="{{ old('email') }}" autofocus>
         </div>
 
         <!-- Submit button -->
         <div>
-            <button type="submit">Send Password Reset Link</button>
+            <button type="submit" class="btn btn-primary">Send Password Reset Link</button>
         </div>
-        </form>
-    </div>
 @endsection

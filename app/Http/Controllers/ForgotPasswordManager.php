@@ -14,8 +14,7 @@ class ForgotPasswordManager extends Controller
     //
     public function forgot_password()
     {
-        return view("auth.forgot_password");
-
+        return view("auth.forgot_password" , ['action'=> route('forgot_passwordPost') , 'method' => 'POST']);
     }
     public function forgot_passwordPost(Request $request)
     {
@@ -31,17 +30,18 @@ class ForgotPasswordManager extends Controller
         Mail::send('auth.email', ['token' => $token], function ($message) use ($request) {
             $message->to($request->email)->subject('Reset Password');
         });
-        return view('temp');
+        Session::flash('message', 'Reset password link has been sent to your email');
+        return redirect()->route('login.form');
 
     }
     public function resetPassword($token)
     {
-        return view('auth.newpass', compact('token'));
+        return view('auth.newpass', [ 'action' => route('resetPasswordPost') , 'method' => 'POST' , 'token' => $token]);
     }
     public function resetPasswordPost(Request $request)
     {
         $validatedData = request()->validate([
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|confirmed',
         ]);
         $forgot = forgot_password::where('email', $request->input('email'))
             ->where('token', $request->input('token'));
@@ -53,7 +53,5 @@ class ForgotPasswordManager extends Controller
             return redirect()->route('login.form');
         }
         return redirect()->back()->withErrors(['email' => 'Invalid email or token or reset password request has already used']);
-
-
     }
 }

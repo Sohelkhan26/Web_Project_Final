@@ -55,6 +55,7 @@
     <link rel="stylesheet" href="{{asset('css/button.css')}}">
     <div class="mt-5 text-center">
         <button class="learn-more" type="submit"><a href="{{ route('contacts.create') }}">Add Contact</a></button>
+        <a href="{{ route('contacts.export') }}">Export to Excel</a>
     </div>
 {{--    <a href="{{ route('contacts.create') }}" class="learn-more  position-fixed bottom-0 end-0 m-3" style="font-size: 2rem;">+</a>--}}
 @endsection

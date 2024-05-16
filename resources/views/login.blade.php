@@ -7,8 +7,8 @@
 @if($errors->any())
     <small class="text-danger"> {{$errors -> first('email')}} </small>
 @endif
-    @if(Session::has('msg'))
-        <small class="text-danger">{{ Session::get('msg')}}</small>
+    @if(Session::has('message'))
+        <small class="text-danger">{{ Session::get('message')}}</small>
     @endif
     <label class="form-label text-light">Username :</label>
     <input type="text" class="form-control" name="username" required>

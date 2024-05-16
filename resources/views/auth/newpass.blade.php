@@ -1,8 +1,7 @@
-@extends('layout.sidebar')
+@extends('layout.form')
+@section('title', 'Reset Password')
+@section('heading', 'Reset Password')
 @section('content')
-    <div>
-        <h2>Forgot Password</h2>
-
         <!-- Display status or errors if any -->
         @if (session('status'))
             <div>
@@ -27,21 +26,16 @@
             <div class="alert alert-danger">{{ $errors->first('email') }}</div>
         @endif
 
-        <form method="POST" action="{{ route('resetPasswordPost') }}">
-            @csrf
             <input type="hidden" name="token" value="{{ $token }}">
 
-            <label for="email">Email</label>
-            <input id="email" type="email" name="email" required>
+            <label for="email" class="form-label text-light">Email</label>
+            <input id="email" type="email" name="email" required class="form-control">
 
-            <label for="password">New Password</label>
-            <input id="password" type="password" name="password" required>
+            <label for="password" class="form-label text-center text-light">New Password</label>
+            <input id="password" type="password" name="password" required class="form-control">
 
-            <label for="password_confirmation">Confirm New Password</label>
-            <input id="password_confirmation" type="password" name="password_confirmation" required>
+            <label for="password_confirmation" class="form-label text-light">Confirm New Password</label>
+            <input id="password_confirmation" type="password" name="password_confirmation" required class="form-control">
 
-            <button type="submit">Reset Password</button>
-        </form>
-
-    </div>
+            <button type="submit" class="btn btn-secondary">Reset Password</button>
 @endsection

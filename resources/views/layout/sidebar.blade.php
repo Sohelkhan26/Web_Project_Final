@@ -207,14 +207,14 @@
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
                            data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
-                            Two Links
+                            More Options
                         </a>
                         <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Link 1</a>
+                                <a href="{{route('contacts.importShow')}}" class="sidebar-link">Import</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">Link 2</a>
+                                <a href="{{route('contacts.export')}}" class="sidebar-link">Export</a>
                             </li>
                         </ul>
                     </li>
