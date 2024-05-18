@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'last_name' => fake()->lastName(),
             'username'=>fake()->unique()->userName(),
             'email'=>fake()->unique()->safeEmail(),
-            'password'=>static::$password ??= Hash::make('password'),
+            'password'=>bcrypt(1234),
             'address'=>fake()->address(),
             'city'=>fake()->city(),
             'phone'=>fake()->phoneNumber(),
@@ -36,13 +36,7 @@ class UserFactory extends Factory
             'zip'=>fake()->postcode(),
             'image'=>fake()->imageUrl(),
 //            'email_verified_at'=>now(),
-            'remember_token'=>Str::random(10),
-
-//            'name' => fake()->name(),
-//            'email' => fake()->unique()->safeEmail(),
-//            'email_verified_at' => now(),
-//            'password' => static::$password ??= Hash::make('password'),
-//            'remember_token' => Str::random(10),
+            'remember_token'=>Str::random(10)
         ];
     }
 

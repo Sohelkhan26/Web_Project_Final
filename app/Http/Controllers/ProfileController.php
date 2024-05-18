@@ -20,10 +20,32 @@ class ProfileController extends Controller
 
     public function updateProfile(Request $request)
     {
-//        dd($request->name);
-//       dd($request->all());
-//        Auth::user() -> address = $request -> address;
-        Auth::user() -> update($request->all());
+        $user = Auth::user();
+        $imageName = null;
+        if($request->hasFile('image')){
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+//            i want to delete the previous image from the public/image directory
+            $image_path = public_path('images').'/'.$user->image;
+            if(file_exists($image_path)){
+                unlink($image_path);
+            }
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('images'), $imageName);
+        }
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->city = $request->city;
+        $user->phone = $request->phone;
+        $user->division = $request->division;
+        $user->zip = $request->zip;
+        $user->image = $imageName;
+        $user->save();
         return redirect()->route('profile');
     }
 }

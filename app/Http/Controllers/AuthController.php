@@ -19,6 +19,31 @@ class AuthController extends Controller
     {
         return view('register', ['action' => route('register.submit') , 'method' => 'POST']);
     }
+//    create a function that retrieves the image provided by the user and saves it in the public/images directory
+    public function uploadImage(Request $request)
+    {
+        // Validate the request to make sure a file was uploaded
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Handle the image upload
+        if ($request->hasFile('image')) {
+            // Get the original image file name
+            $originalName = $request->image->getClientOriginalName();
+
+            // Generate a unique file name to avoid overwriting existing files
+            $uniqueName = time() . '_' . $originalName;
+
+            // Move the image to the public/images directory
+            $request->image->move(public_path('images'), $uniqueName);
+
+            // Return the path of the uploaded image
+            return response()->json(['image_path' => 'images/' . $uniqueName], 200);
+        }
+
+        return response()->json(['error' => 'No file was uploaded.'], 400);
+    }
     public function signup(RegisterRequest $request)
     {
         // Handle image upload
@@ -44,7 +69,7 @@ class AuthController extends Controller
             'zip' => $request->input('zip'),
             'image' => $imageName,
         ]);
-        return view('profile' , compact('user'));
+        return redirect()->route('login.form');
     }
     public function login(LoginRequest $request)
     {

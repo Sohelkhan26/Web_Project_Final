@@ -147,7 +147,7 @@
                 </div>
                 <div class="form-group">
                     <label for="note">Note</label>
-                    <textarea  class="form-control" id="note" name="note" placeholder="{{$contact->note}}"></textarea>
+                    <textarea  class="form-control" id="note" name="note">{{$contact->note}}</textarea>
                 </div>
 {{--                <button class="formbold-btn" type = "submit">Update</button>--}}
                 <div class="mt-5 text-center"><button class="learn-more" type="submit">Update Contact</button></div>

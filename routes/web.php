@@ -48,3 +48,4 @@ Route::get('/contacts/export', [ContactsController::class, 'export'])->name('con
 Route::get('/contacts/import' , [ContactsController::class , 'showImportForm'])->name('contacts.importShow');
 
 Route::post('/contacts/import', [ContactsController::class, 'import'])->name('contacts.import');
+Route::get('/contacts/{id}/delete', [ContactsController::class, 'delete'])->name('contacts.delete');

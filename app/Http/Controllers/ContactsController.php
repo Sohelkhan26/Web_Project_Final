@@ -14,6 +14,19 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class ContactsController extends Controller
 {
 
+    private function handleFileUpload($request)
+    {
+        $imageName = null;
+        if($request->hasFile('image')){
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('images'), $imageName);
+        }
+        return $imageName;
+    }
     public function import(Request $request)
     {
         $request->validate([
@@ -109,9 +122,20 @@ class ContactsController extends Controller
         // Return a download response
         return response()->download($filePath)->deleteFileAfterSend(true);
     }
+    public function DeleteCurrentImage(Contact $contact)
+    {
+        $image_path = public_path('images').'/'.$contact->image;
+        if(file_exists($image_path && $contact->image)){
+            unlink($image_path);
+        }
+    }
     public function updateContacts(CreateContactRequest $request):View
     {
+//        dd($request->all());
         $contact = Contact::find($request->id);
+        $imageName = $this -> handleFileUpload($request);
+        $this->DeleteCurrentImage($contact);
+        $contact->image = $imageName;
         $contact->first_name = $request->first_name;
         $contact->last_name = $request->last_name;
         $contact->email = $request->email;
@@ -163,12 +187,28 @@ class ContactsController extends Controller
         $contact->note = $request->note;
 
         $contact->save();
-        return view('showcontacts' , ['contacts' => Auth::user()->contacts]);
+        return view('showcontacts' , ['contacts' => Auth::user()->contacts , 'sortField' => 'first_name' , 'sortDirection' => 'asc']);
     }
-    public function showContacts()
+    public function showContacts(Request $request)
+{
+    $sortField = $request->get('sortField','first_name');
+    $sortDirection = $request->get('sortDirection','asc');
+    if($request->get('sortField' === $sortField && $request->get('sortDirection') === 'asc')){
+        $sortDirection = $sortDirection === 'asc' ? 'desc' : 'asc';
+    }
+    $contacts = auth()->user()->contacts()->orderBy($sortField,$sortDirection)->get();
+    return view('showcontacts', ['contacts' => $contacts, 'sortField' => $sortField, 'sortDirection' => $sortDirection]);
+}
+    public function delete($id)
     {
-        $contacts = auth()->user()->contacts;
-        return view('showcontacts', ['contacts' => $contacts]);
+        $contact = Contact::find($id);
+        if ($contact) {
+            $contact->delete();
+            return view('showcontacts', ['contacts' => Auth::user()->contacts , 'sortField' => 'first_name' , 'sortDirection' => 'asc']);
+        } else {
+            // Redirect to showcontacts view with an error message
+            return view('showcontacts', ['contacts' => Auth::user()->contacts , 'sortField' => 'first_name' , 'sortDirection' => 'asc']);
+        }
     }
 
 }

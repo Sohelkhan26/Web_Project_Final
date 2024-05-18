@@ -342,3 +342,101 @@ public function forgot_passwordPost(Request $request)
 5. **Response**: Finally, the method returns a view (`temp`). This could be a page informing the user that an email has been sent to them with instructions to reset their password.
 
 When the user clicks on the link in the email, they will be directed to a page where they can reset their password. The token in the URL is used to verify the request and ensure it's the same user who requested the password reset.
+
+
+## php artisan tinker
+PHP Artisan Tinker is a REPL (Read-Eval-Print Loop) for Laravel, which is powered by the PsySH console under the hood. It allows you to interact with your entire Laravel application from the command line, including the Eloquent ORM, jobs, events, and more.
+
+Here's how you can use it:
+
+1. **Starting Tinker**: You can start a Tinker session by running the `php artisan tinker` command in your terminal. This will bring up a new prompt where you can start typing PHP code.
+
+```bash
+php artisan tinker
+```
+
+2. **Interacting with Eloquent**: You can use Tinker to interact with your Eloquent models. For example, you can create, read, update, and delete records in your database.
+
+```php
+// Create a new user
+$user = new App\Models\User;
+$user->name = 'John Doe';
+$user->email = 'john@example.com';
+$user->password = Hash::make('password');
+$user->save();
+
+// Retrieve all users
+$users = App\Models\User::all();
+
+// Update a user
+$user = App\Models\User::find(1);
+$user->name = 'Jane Doe';
+$user->save();
+
+// Delete a user
+$user = App\Models\User::find(1);
+$user->delete();
+```
+
+3. **Running Code**: You can run any PHP code directly in Tinker. This is useful for testing out small snippets of code.
+
+```php
+echo Str::random(10);
+```
+
+4. **Interacting with Laravel's Components**: You can interact with any of Laravel's components. For example, you can dispatch jobs, send notifications, fire events, and more.
+
+```php
+// Dispatch a job
+dispatch(new App\Jobs\ProcessPodcast);
+
+// Send a notification
+$user = App\Models\User::first();
+$user->notify(new App\Notifications\InvoicePaid);
+```
+
+5. **Exiting Tinker**: You can exit a Tinker session by typing `exit` or `quit` at the prompt, or by pressing `CTRL + D`.
+
+Remember, any changes you make to your database while in a Tinker session are permanent, so be careful when modifying data.
+
+## Database Model Factory
+A database model factory in Laravel is a class that defines the structure and attributes of a model. 
+It is used to generate fake data for testing or seeding the database.
+
+Here's how you can create a model factory in Laravel:
+```php
+php artisan make:factory UserFactory --model=User
+```
+In the factory class, in the definition method you can define the attributes of the model that you want to generate fake data for.
+```php
+public function definition(): array
+    {
+        return [
+            'first_name' => $this->faker->firstName
+        ];
+    }
+```
+You can then use the factory to create instances of the model with the specified attributes.
+```php
+$user = User::factory()->create();
+```
+This will create a new user instance with a randomly generated first name.
+You can create it in the terminal after running the tinker command.
+Or you can write it in the seeder file to create multiple records at once.
+Create the seeder file using the following command:
+```php
+php artisan make:seeder UserSeeder
+```
+
+For example:
+```php
+User::factory()->count(10)->create();
+```
+
+In our project to create some amount of contact record for a user with user id 1,
+Note: The user_id field should be fillable in the Contact model. And remember to start the tinker
+session before running the command in the terminal.
+```php
+Contact::factory()->count(5)->create(['user_id' => 1]);
+```
+

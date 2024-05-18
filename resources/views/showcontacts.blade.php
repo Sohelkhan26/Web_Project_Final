@@ -19,18 +19,24 @@
         <div class="container">
             <h2 class="mb-5">All Contacts</h2>
 
-
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="table-responsive">
-
                 <table class="table table-striped custom-table">
                     <thead>
                     <tr>
 
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Contact</th>
-                        <th scope="col">Address</th>
+                        <th scope="col"><a href="{{ route('contacts', ['sortField' => 'first_name', 'sortDirection' => 'asc']) }}">
+                                First Name
+                            </a></th>
+                        <th scope="col"><a href="{{route('contacts',['sortField'=>'last_name' , 'sortDirection' =>   'asc' ])}}">Last Name</a></th>
+                        <th scope="col"><a href="{{route('contacts' ,['sortField'=>'email' , 'sortDirection' =>   'asc' ])}}">Email</a></th>
+                        <th scope="col"><a href="{{route('contacts' ,['sortField'=>'phone' , 'sortDirection' =>   'asc' ])}}">Phone</a></th>
+                        <th scope="col"><a href="{{route('contacts' ,['sortField'=>'address' , 'sortDirection' =>   'asc' ])}}">Address</a></th>
+                        <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -44,6 +50,7 @@
                             <td>{{$contact->address}}</td>
 {{--                            {{route('contacts.edit')}}                      --}}
                             <td><a href="{{route('contacts.edit' , ['id' => $contact->id])}}" class="more">Details</a></td>
+                            <td><a href="{{route('contacts.delete' , ['id' => $contact->id])}}" class="more">Delete</a></td>
                         </tr>
                     @endforeach
                     </tbody>

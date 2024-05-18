@@ -80,13 +80,17 @@
             border: none !important; }
 
     </style>
-    <form method = "POST" action="{{route('profile.update')}}">
+    <form method = "POST" action="{{route('profile.update')}}" enctype="multipart/form-data">
         @csrf
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                     <!-- Replace the src attribute with the image path -->
+                    <div class="form-group">
+                        <label for="image">Profile Image</label>
+                        <input type="file" class="form-control" id="image" name="image">
+                    </div>
                     <img class="rounded-circle mt-5" width="150px" src="{{ asset('images/' . $user -> image) }}">
                     <!-- Placeholder for name and email -->
                     <span class="font-weight-bold">{{$user -> first_name . " " .$user -> last_name }}</span>
