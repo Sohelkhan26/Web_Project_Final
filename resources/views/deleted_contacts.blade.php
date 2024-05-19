@@ -35,7 +35,7 @@
                 <table class="table table-striped custom-table">
                     <thead>
                     <tr>
-                        <th scope="col"><input type="checkbox" id="select-all"></th>
+{{--                        <th scope="col"><input type="checkbox" id="select-all"></th>--}}
                         <th scope="col"><a href="{{ route('contacts', ['sortField' => 'first_name', 'sortDirection' => 'asc']) }}">
                                 First Name
                             </a></th>
@@ -50,7 +50,7 @@
                     <tbody>
                     @foreach($contacts as $contact)
                         <tr>
-                            <td><input type="checkbox" name="ids[]" value="{{$contact -> id}}" ></td>
+{{--                            <td><input type="checkbox" name="ids[]" value="{{$contact -> id}}" ></td>--}}
                             <td>{{$contact->first_name}}</td>
                             <td>{{$contact->last_name}}</td>
                             <td>{{$contact->email}}</td>

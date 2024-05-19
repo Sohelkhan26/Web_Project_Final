@@ -199,7 +199,12 @@ class ContactsController extends Controller
     }
     public function showDeletedContacts()
     {
-        $deletedContacts = Contact::onlyTrashed()->get();
+
+        $user = Auth::user();
+        if(!$user){
+            return redirect()->route('login.form');
+        }
+        $deletedContacts = Contact::onlyTrashed()->where('user_id', $user->id)->get();
 
         // You can return these contacts to a view or however you want to use them
         return view('deleted_contacts', ['contacts' => $deletedContacts]);
