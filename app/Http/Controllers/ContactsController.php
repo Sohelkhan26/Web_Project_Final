@@ -14,7 +14,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class ContactsController extends Controller
 {
 
-    private function handleFileUpload($request)
+    public static function handleFileUpload($request)
     {
         $imageName = null;
         if($request->hasFile('image')){
@@ -42,7 +42,6 @@ class ContactsController extends Controller
         array_shift($rows);
 
         foreach ($rows as $row) {
-            // Assuming the columns are in the order: ID, Name, Email, Phone, Job, Company, Country, Address, Birthdate, Image, Zip, City, Division, Note
             Contact::create([
                 'first_name' => $row[1],
                 'last_name' => $row[2],
@@ -60,7 +59,6 @@ class ContactsController extends Controller
                 'user_id' => auth()->id(),
             ]);
         }
-
         return redirect()->route('contacts')->with('success', 'Contacts imported successfully');
     }
     public function showImportForm()
@@ -92,9 +90,6 @@ class ContactsController extends Controller
         $sheet->setCellValue('M1', 'Division');
         $sheet->setCellValue('N1', 'Note');
 
-        // ... Add more headers as needed
-
-        // Add the contacts data
         $row = 2;
         foreach ($contacts as $contact) {
             $sheet->setCellValue('A' . $row, $contact->id);
@@ -162,13 +157,7 @@ class ContactsController extends Controller
     {
 //        dd($request->all());
         $user_id = Auth::user()->id;
-        if ($request->hasFile('image')) {
-            $imageName = time().'.'.$request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
-        } else {
-            // Handle case when no image is provided
-            $imageName = null;
-        }
+        $imageName = $this -> handleFileUpload($request);
         $contact = new Contact();
         $contact->first_name = $request->first_name;
         $contact->last_name = $request->last_name;
@@ -185,29 +174,46 @@ class ContactsController extends Controller
         $contact->division = $request->division;
         $contact->user_id = $user_id;
         $contact->note = $request->note;
-
         $contact->save();
         return view('showcontacts' , ['contacts' => Auth::user()->contacts , 'sortField' => 'first_name' , 'sortDirection' => 'asc']);
     }
     public function showContacts(Request $request)
-{
-    $sortField = $request->get('sortField','first_name');
-    $sortDirection = $request->get('sortDirection','asc');
-    if($request->get('sortField' === $sortField && $request->get('sortDirection') === 'asc')){
-        $sortDirection = $sortDirection === 'asc' ? 'desc' : 'asc';
+    {
+        $sortField = $request->get('sortField','first_name');
+        $sortDirection = $request->get('sortDirection','asc');
+        if($request->get('sortField' === $sortField && $request->get('sortDirection') === 'asc')){
+            $sortDirection = $sortDirection === 'asc' ? 'desc' : 'asc';
+        }
+        $contacts = auth()->user()->contacts()->orderBy($sortField,$sortDirection)->get();
+        return view('showcontacts', ['contacts' => $contacts, 'sortField' => $sortField, 'sortDirection' => $sortDirection]);
     }
-    $contacts = auth()->user()->contacts()->orderBy($sortField,$sortDirection)->get();
-    return view('showcontacts', ['contacts' => $contacts, 'sortField' => $sortField, 'sortDirection' => $sortDirection]);
-}
     public function delete($id)
     {
         $contact = Contact::find($id);
-        if ($contact) {
+        if($contact) {
             $contact->delete();
             return view('showcontacts', ['contacts' => Auth::user()->contacts , 'sortField' => 'first_name' , 'sortDirection' => 'asc']);
         } else {
-            // Redirect to showcontacts view with an error message
             return view('showcontacts', ['contacts' => Auth::user()->contacts , 'sortField' => 'first_name' , 'sortDirection' => 'asc']);
+        }
+    }
+    public function showDeletedContacts()
+    {
+        $deletedContacts = Contact::onlyTrashed()->get();
+
+        // You can return these contacts to a view or however you want to use them
+        return view('deleted_contacts', ['contacts' => $deletedContacts]);
+    }
+
+    public function deleteForever($id)
+    {
+        $contact = Contact::withTrashed()->find($id);
+
+        if ($contact) {
+            $contact->forceDelete();
+            return redirect()->route('contacts.deleted')->with('success', 'Contacts deleted successfully');
+        } else {
+            return redirect()->route('contacts.deleted')->with('error', 'Contact not found');
         }
     }
 
