@@ -44,7 +44,7 @@
                         <th scope="col"><a href="{{route('contacts' ,['sortField'=>'phone' , 'sortDirection' =>   'asc' ])}}">Phone</a></th>
                         <th scope="col"><a href="{{route('contacts' ,['sortField'=>'address' , 'sortDirection' =>   'asc' ])}}">Address</a></th>
                         <th scope="col"></th>
-{{--                        <th scope="col"></th>--}}
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -57,7 +57,7 @@
                             <td>{{$contact->phone}}</td>
                             <td>{{$contact->address}}</td>
                             {{--                            {{route('contacts.edit')}}                      --}}
-{{--                            <td><a href="{{route('contacts.edit' , ['id' => $contact->id])}}" class="more">Details</a></td>--}}
+                            <td><a href="{{route('contacts.restore' , ['id' => $contact->id])}}" class="more">Restore</a></td>
                             <td><a href="{{route('contacts.deleteForever' , ['id' => $contact->id])}}" class="more">Delete</a></td>
                         </tr>
                     @endforeach

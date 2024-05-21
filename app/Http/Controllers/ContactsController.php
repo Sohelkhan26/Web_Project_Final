@@ -222,4 +222,16 @@ class ContactsController extends Controller
         }
     }
 
+    public function restore($id)
+    {
+        $contact = Contact::withTrashed()->find($id);
+
+        if ($contact) {
+            $contact->restore();
+            return redirect()->route('contacts.deleted')->with('success', 'Contact restored successfully');
+        } else {
+            return redirect()->route('contacts.deleted')->with('error', 'Contact not found');
+        }
+    }
+
 }

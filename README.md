@@ -440,3 +440,70 @@ session before running the command in the terminal.
 Contact::factory()->count(5)->create(['user_id' => 1]);
 ```
 
+You can check your Laravel project's version by using the Artisan command-line tool that is included with Laravel.Run the following command:
+
+```bash
+php artisan --version
+```
+
+This command will output the version of Laravel that your project is using.
+
+> There is no built in ```api.php``` file in Laravel version 11. 
+When the ```php artisan install:api``` command in run on the terminal the file is created.
+
+
+Ajax (Asynchronous JavaScript and XML) is a set of web development techniques that allows web pages to be updated asynchronously by exchanging data with a web server
+behind the scenes. This means that web pages can be updated without reloading the entire page, resulting in a more dynamic and interactive user experience.
+Ajax is commonly used to make requests to a server to fetch data, submit form data, and update parts of a web page without reloading the entire page.
+It uses a combination of HTML, CSS, JavaScript, and XML (or JSON) to achieve this functionality.
+
+Include the jquery library in your project by adding the following line to the head section of your HTML file:
+```html
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+```
+
+Here's a basic example of how you can use Ajax in a Laravel application to search for contacts based on a user's input:
+
+```php
+$(document).ready(function() {
+            $('#search').on('keyup', function(e) {
+                e.preventDefault();
+                const query = $(this).val();
+                // alert(query);
+                $.ajax({
+                    url: "{{route('contacts.search')}}",
+                    type: "GET",
+                    data: {'query': query},
+                    success: function(data) {
+                    let rows = '';
+                    $.each(data, function(key, value) {
+                        rows += '<tr>';
+                        rows += '<td>' + value.first_name + '</td>';
+                        rows += '<td>' + value.last_name + '</td>';
+                        rows += '<td>' + value.email + '</td>';
+                        rows += '<td>' + value.phone + '</td>';
+                        rows += '<td>' + value.address + '</td>';
+                        rows += '<td><a href="/contacts/' + value.id + '/edit" class="more">Details</a></td>';
+                        rows += '<td><a href="/contacts/' + value.id + '/delete" class="more">Delete</a></td>';
+                        rows += '</tr>';
+                    });
+                    $('.custom-table tbody').html(rows);
+                }
+                });
+            });
+        });
+```
+```$(document).ready(function() {``` This line is using jQuery to ensure that the code inside this function will only run once the DOM is fully loaded.
+```$('#search').on('keyup', function(e) {``` This line is attaching a keyup event listener to the HTML element with the id search. This means that the function will be executed every time a key is released while this input field is focused. A input field with the id search should be present in the HTML document.
+```e.preventDefault();``` This line is preventing the default action of the event. In this case, it's preventing the form from being submitted when the user presses enter.  
+```const query = $(this).val();```: This line is getting the current value of the input field (which is the text that the user has entered) and storing it in the query variable.  
+```$.ajax({```: This line is starting an AJAX request. AJAX allows you to send and receive data asynchronously, without refreshing the page.  
+```url: "{{route('contacts.search')}}",```: This line is setting the URL that the AJAX request will be sent to. It's using Laravel's route function to generate the URL for the contacts.search route.  
+```type: "GET",```: This line is setting the HTTP method of the AJAX request to GET.  
+```data: {'query': query},```: This line is setting the data that will be sent with the AJAX request. It's sending an object with a query property that contains the value of the query variable.  
+```success: function(data) {```: This line is defining a function that will be executed if the AJAX request is successful. The data parameter will contain the data returned from the server.
+
+The ```value``` that is returned from the route "contacts.search" is a list of contacts that match the search query.
+Note that anything can be returned from the route "contacts.search" i.e: view, json, etc. At first i returned the ```showcontacts``` view and tried to update the html element of 
+different kinds of classes but it didn't work. So i returned the json data and updated the html element of the class custom-table tbody with the data.
+

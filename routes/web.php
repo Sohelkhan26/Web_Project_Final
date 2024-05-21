@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactAPIController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\ForgotPasswordManager;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Middleware\AuthGuard;
 use App\Http\Middleware\CustomThrottleRequests;
 use Illuminate\Support\Facades\Route;
@@ -53,3 +55,19 @@ Route::get('/contacts/{id}/delete', [ContactsController::class, 'delete'])->name
 Route::get('/contacts/deleted', [ContactsController::class, 'showDeletedContacts'])->name('contacts.deleted');
 
 Route::get('/contacts/{id}/delete/forever', [ContactsController::class, 'deleteForever'])->name('contacts.deleteForever');
+Route::get('/contacts/{id}/restore' , [ContactsController::class , 'restore'])->name('contacts.restore');
+
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
+Route::get('/contacts/search', [ContactAPIController::class, 'index'])->name('contacts.search');
