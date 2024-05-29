@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -37,41 +38,53 @@ class LoginRequest extends FormRequest
     /**
      * Attempt to authenticate the request's credentials.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
-    public function authenticate(): void
-{
-    $this->ensureIsNotRateLimited();
+    public function authenticate():void
+    {
+        $user = User::where('username', $this->input('username'))->first();
 
-    $user = User::where('email', $this->input('email'))->orWhere('username', $this->input('username'))->first();
-
-    if ($user && $user->locked) {
-        $seconds = RateLimiter::availableIn($this->throttleKey());
-
-        throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-                'hours' => ceil($seconds / 3600),
-            ]),
-        ]);
+        // If the user exists and their password is correct
+        if ($user && Hash::check($this -> input('password'), $user->password)) {
+            // Log the user in
+            Auth::login($user);
+        }
+        else {
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+        }
+//        $this->ensureIsNotRateLimited();
+//
+//        $user = User::where('email', $this->input('email'))->orWhere('username', $this->input('username'))->first();
+//
+//        if ($user && $user->locked) {
+//            $seconds = RateLimiter::availableIn($this->throttleKey());
+//
+//            throw ValidationException::withMessages([
+//                'email' => trans('auth.throttle', [
+//                    'seconds' => $seconds,
+//                    'minutes' => ceil($seconds / 60),
+//                    'hours' => ceil($seconds / 3600),
+//                ]),
+//            ]);
+//        }
+//
+//        if (! Auth::attempt($this->only('email', 'username', 'password'), $this->boolean('remember'))) {
+//            RateLimiter::hit($this->throttleKey());
+//
+//            throw ValidationException::withMessages([
+//                'email' => trans('auth.failed'),
+//            ]);
+//        }
+//
+//        RateLimiter::clear($this->throttleKey());
     }
-
-    if (! Auth::attempt($this->only('email', 'username', 'password'), $this->boolean('remember'))) {
-        RateLimiter::hit($this->throttleKey());
-
-        throw ValidationException::withMessages([
-            'email' => trans('auth.failed'),
-        ]);
-    }
-
-    RateLimiter::clear($this->throttleKey());
-}
 
     /**
      * Ensure the login request is not rate limited.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function ensureIsNotRateLimited(): void
     {

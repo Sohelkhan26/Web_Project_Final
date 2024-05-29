@@ -80,9 +80,9 @@
                 </ul>
             </li>
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link">
-                    <i class="lni lni-popup"></i>
-                    <span>Notification</span>
+                <a href="{{route('searchAnything')}}" class="sidebar-link">
+                    <i class="fas fa-search"></i>
+                    <span>Search</span>
                 </a>
             </li>
             <li class="sidebar-item">

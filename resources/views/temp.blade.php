@@ -11,27 +11,28 @@
 <body>
     <h1>
         Email Sent
-        <form action="{{ route('contacts.search') }}" method="GET">
-            <input type="text" name="query" placeholder="Search contacts" id="search">
-            <button type="submit">Search</button>
-        </form>
+{{--        <form action="{{ route('search') }}" method="GET">--}}
+{{--            <label for="q">Search Term:</label>--}}
+{{--            <input type="text" name="q" id="q" required>--}}
+{{--            <button type="submit">Search</button>--}}
+{{--        </form>--}}
     </h1>
 </body>
-<script>
-    $(document).ready(function() {
-        alert()
-    $('#search').on('keyup', function() {
-        const query = $(this).val();
-        $.ajax({
-            url: "/api/list",
-            type: "GET",
-            data: {'query': query},
-            success: function(data) {
-                // Update your page with the search results
-                $('#search-results').html(data);
-            }
-        });
-    });
-});
-</script>
+{{--<script>--}}
+{{--    $(document).ready(function() {--}}
+{{--        alert()--}}
+{{--    $('#search').on('keyup', function() {--}}
+{{--        const query = $(this).val();--}}
+{{--        $.ajax({--}}
+{{--            url: "/api/list",--}}
+{{--            type: "GET",--}}
+{{--            data: {'query': query},--}}
+{{--            success: function(data) {--}}
+{{--                // Update your page with the search results--}}
+{{--                $('#search-results').html(data);--}}
+{{--            }--}}
+{{--        });--}}
+{{--    });--}}
+{{--});--}}
+{{--</script>--}}
 </html>

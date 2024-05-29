@@ -1,14 +1,22 @@
 <?php
 
+use App\AI\ChatWithOpenAI;
+use App\Http\Controllers\APIController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactAPIController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\ForgotPasswordManager;
+use App\Http\Controllers\GeminiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Middleware\AuthGuard;
 use App\Http\Middleware\CustomThrottleRequests;
+use GeminiAPI\Requests\RequestInterface;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use GeminiAPI\Laravel\Facades\Gemini;
+use Psr\Http\Message\ResponseInterface;
+
 
 Route::get('/register', [AuthController::class , 'showRegisterForm'])->name('register.form');
 Route::post('/register',[AuthController::class,'signup'])->name('register.submit');
@@ -19,7 +27,9 @@ Route::post('/login',[AuthController::class,'login'])->name('login.submit')->mid
 Route::get('/logout', [AuthController::class , 'logout'])->name('logout');
 
 Route::get('/temp' , function (){
-    return view('temp');
+    $user = new ChatWithOpenAI();
+    $response = $user -> send('What is Laravel used for?');
+    dd($response);
 });
 
 
@@ -70,4 +80,11 @@ Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
 
 Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END
-Route::get('/contacts/search', [ContactAPIController::class, 'index'])->name('contacts.search');
+Route::get('/contacts/search', [ContactsController::class, 'search'])->name('contacts.search');
+Route::get('/search' , [APIController::class , 'searchGoogle'])->name('search');
+Route::get('/searchAnything' , function (){
+    return view('searchAnything');
+})->name('searchAnything');
+
+Route::get('/new-order', [GeminiController::class, 'newOrder']);
+

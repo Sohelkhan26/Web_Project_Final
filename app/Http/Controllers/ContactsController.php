@@ -234,4 +234,20 @@ class ContactsController extends Controller
         }
     }
 
+    public function search(Request $request, $user_id = null)
+    {
+        $query = $request->input('query');
+        $contacts = Contact::where('first_name', 'LIKE', "%{$query}%")
+            ->orWhere('last_name', 'LIKE', "%{$query}%")
+            ->orWhere('email', 'LIKE', "%{$query}%")
+            ->orWhere('phone', 'LIKE', "%{$query}%")
+            ->orWhere('address', 'LIKE', "%{$query}%")
+            ->get();
+//        if($contacts.count() <= 1){
+//            return response()->json(['message' => 'No contacts found'], 404);
+//        }
+//        return view('showcontacts', ['contacts' => $contacts]);
+        return response()->json($contacts);
+    }
+
 }

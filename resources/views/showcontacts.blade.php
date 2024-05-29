@@ -17,6 +17,7 @@
     </style>
     <script>
         $(document).ready(function() {
+            // alert();
             $('#search').on('keyup', function(e) {
                 e.preventDefault();
                 const query = $(this).val();
@@ -26,6 +27,7 @@
                     type: "GET",
                     data: {'query': query},
                     success: function(data) {
+                        // alert()
                     let rows = '';
                     $.each(data, function(key, value) {
                         rows += '<tr>';
