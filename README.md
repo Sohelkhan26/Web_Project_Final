@@ -41,28 +41,28 @@ The application has a smart fallback AI chat assistant. To enable live AI respon
 
 ## Application Screenshots and Media
 
-The repository contains interface captures and product demonstration videos located under the `public/assets/Pics/` directory.
+The repository contains interface captures and product demonstration videos located under the root directory of the repository.
 
 ### User Authentication
-![Register Page](public/assets/Pics/register_page.png)
+![Register Page](register_page.png)
 
 ### Profile Management
-![Profile Page](public/assets/Pics/Profile_page.png)
+![Profile Page](Profile_page.png)
 
 ### Contacts Directory
-![Contacts Directory View](public/assets/Pics/contacts_view.png)
+![Contacts Directory View](contacts_view.png)
 
 ### Create Contact Page
-![Create Contact Page](public/assets/Pics/create_contact.png)
+![Create Contact Page](create_contact.png)
 
 ### Trash Management
-![Trash Page](public/assets/Pics/trash.png)
+![Trash Page](trash.png)
 
 ### AI Chat Assistant
-![Chat AI Page](public/assets/Pics/chat_ai_view.png)
+![Chat AI Page](chat_ai_view.png)
 
 ### Interactive Walkthrough Video
-The file `public/assets/Pics/Chat_command.mp4` contains a video walkthrough demonstrating navigation, contacts management, and profile features.
+The file `website demo.mp4` (or `Chat_command.mp4`) contains a video walkthrough demonstrating navigation, contacts management, and profile features.
 
 ---
 
