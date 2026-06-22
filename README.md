@@ -59,7 +59,7 @@ The repository contains interface captures and product demonstration videos loca
 ![Trash Page](trash.png)
 
 ### AI Chat Assistant
-![Chat AI Page](chat_ai_view.png)
+![Chat AI Page](ai.png)
 
 ### Interactive Walkthrough Video
 The file `website demo.mp4` (or `Chat_command.mp4`) contains a video walkthrough demonstrating navigation, contacts management, and profile features.
